@@ -1,6 +1,9 @@
-# BDD Generator
+# 🔮 BDD Generator
+
 
 This small web app generates BDD feature files and scenarios for testing purposes.
+
+🔍 https://davertmik.github.io/bdd-generator/
 
 A generated feature file will look like this:
 
