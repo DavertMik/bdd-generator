@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>BDD Generator</title>
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+
+    <!-- CSS Reset -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+
+    <!-- Milligram CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<link rel="stylesheet"
+      href="/styles/nnfx-light.min.css">
+<script src="/highlight.min.js"></script>
+<script src="/languages/gherkin.min.js"></script>
+
+
+  </head>
+<body>
+
+
+  <div class="container" style="margin-top: 100px;">
+    <h1>BDD Generator</h1>
+
+
+    <form id="form">
+      <fieldset>
+        <label for="scenarios">Scenarios</label>
+        <input type="number" id="scenarios" name="scenarios" value="10" >
+
+        <input class="button-primary" type="submit" value="Send">
+
+
+      </fieldset>
+</form>
+
+
+  <div id="result-block" class="row" style="display: none; position: relative;">
+      <button onclick="copy(this)" class="button button-outline" style="position: absolute; right: 10px; top: 10px;">Copy</button>
+      <div id="result"></div>
+  </div>
+
+<script src="https://pagecdn.io/lib/faker/3.1.0/faker.min.js" crossorigin="anonymous"  ></script>
+<script src="/bddgen.js" crossorigin="anonymous"  ></script>
+
+<script>
+const form = document.getElementById('form');
+form.addEventListener('submit', generate);
+let text = '';
+
+function copy(el) {
+  navigator.clipboard.writeText(text);
+  el.innerText = 'Copied!';
+  setTimeout(() => el.innerText = 'Copy', 3000);
+}
+
+function generate(event) {
+  event.preventDefault();
+  const num = document.getElementById('scenarios').value;
+  text = new BDDGenerator(num).generate();
+
+  const el = document.getElementById('result');
+  el.innerHTML = `<pre><code class="language-gherkin">${text}</code></pre>`
+  hljs.highlightAll();
+  document.getElementById('result-block').style.display = 'block';
+
+  return false;
+}
+</script>
+
+</body>
+</html>
