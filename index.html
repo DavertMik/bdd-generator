@@ -16,9 +16,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
 <link rel="stylesheet"
-      href="styles/nnfx-light.min.css">
-<script src="highlight.min.js"></script>
-<script src="languages/gherkin.min.js"></script>
+      href="prism.css">
+
+<script src="prism.js"></script>
 
 
   </head>
@@ -32,8 +32,23 @@
 
     <form id="form">
       <fieldset>
-        <label for="scenarios">Scenarios</label>
-        <input type="number" id="scenarios" name="scenarios" value="10" >
+
+        <div class="row">
+          <div class="column">
+            <label for="scenarios">Scenarios</label>
+
+
+          </div>
+          <div class="column">
+
+            <label for="has-background"><input type="checkbox" id="has-background" name="hasbackground" value="1" > Background</label>
+          </div>
+          <div class="column">
+
+            <label for="has-outline"><input type="checkbox" id="has-outline" name="hasoutline" value="1" > Outlines</label>
+          </div>
+        </div>
+            <input type="number" id="scenarios" name="scenarios" value="10" >
 
         <input class="button-primary" type="submit" value="Send">
 
@@ -48,7 +63,7 @@
 </p>
 
 
-      <button onclick="copy(this)" class="button button-outline" style="position: absolute; right: 10px; top: 40px;">Copy</button>
+      <button onclick="copy(this)" class="button button-outline" style="position: absolute; right: 10px; top: 80px;">Copy</button>
       <div id="result"></div>
 
 
@@ -90,11 +105,14 @@ function copy(el) {
 function generate(event) {
   event.preventDefault();
   const num = document.getElementById('scenarios').value;
-  text = new BDDGenerator(num).generate();
+  let opts = {};
+  opts.hasOutline = document.getElementById('has-outline').checked;
+  opts.background = document.getElementById('has-background').checked;
+  text = new BDDGenerator(num, opts).generate();
 
   const el = document.getElementById('result');
-  el.innerHTML = `<pre><code class="language-gherkin">${text}</code></pre>`
-  hljs.highlightAll();
+  el.innerHTML = `<pre style="background: #fff"><code class="language-gherkin">${text}</code></pre>`
+  Prism.highlightAll();
   document.getElementById('result-block').style.display = 'block';
 
   return false;
