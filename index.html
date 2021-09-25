@@ -97,7 +97,8 @@ form.addEventListener('submit', generate);
 let text = '';
 
 function copy(el) {
-  navigator.clipboard.writeText(text);
+  let copyText = text.replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+  navigator.clipboard.writeText(copyText);
   el.innerText = 'Copied!';
   setTimeout(() => el.innerText = 'Copy', 3000);
 }
