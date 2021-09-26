@@ -45,7 +45,11 @@
           </div>
           <div class="column">
 
-            <label for="has-outline"><input type="checkbox" id="has-outline" name="hasoutline" value="1" > Outlines</label>
+            <label for="has-outline"><input type="checkbox" id="has-outline" name="hasoutline" value="1" > Scenario Outlines</label>
+          </div>
+          <div class="column">
+
+            <label for="has-tags"><input type="checkbox" id="has-tags" name="hastags" value="1" > Tags</label>
           </div>
         </div>
             <input type="number" id="scenarios" name="scenarios" value="10" >
@@ -109,6 +113,7 @@ function generate(event) {
   let opts = {};
   opts.hasOutline = document.getElementById('has-outline').checked;
   opts.background = document.getElementById('has-background').checked;
+  opts.tags = document.getElementById('has-tags').checked;
   text = new BDDGenerator(num, opts).generate();
 
   const el = document.getElementById('result');

@@ -6,6 +6,7 @@ class BDDGenerator {
     this.scenarios = [];
     this.hasOutline = opts.hasOutline;
     this.background = opts.background;
+    this.tags = opts.tags;
   }
 
   generate() {
@@ -15,6 +16,10 @@ class BDDGenerator {
 
   generateFeature() {
     let feature = `Feature: ${faker.lorem.words(faker.random.number({ min: 3, max: 10 }))}\n\n`;
+
+    if (this.tags) {
+      feature = this.generateTags() + '\n' + feature;
+    }
 
     if (this.background) {
       feature += "Background: \n";
@@ -46,6 +51,14 @@ class BDDGenerator {
     let isOutline = this.hasOutline && Math.random() > 0.8;
 
     let scenario = `Scenario: ${faker.lorem.words(faker.random.number({ min: 3, max: 10 }))}\n`
+
+
+    if (this.tags) {
+      scenario = this.generateTags() + '\n' + scenario;
+    }
+
+
+
     if (isOutline) scenario = `Scenario Outline: ${faker.lorem.words(faker.random.number({ min: 3, max: 10 }))}\n`
 
     let stepsNum = faker.random.number({ min: 2, max: 15 })
@@ -89,6 +102,14 @@ class BDDGenerator {
     }
 
     return scenario;
+  }
+
+  generateTags() {
+    let tagsLine = ''
+    for (let i = 0; i < faker.random.number({ min: 0, max: 5 }); i++) {
+      tagsLine += `@${faker.system.fileExt()} `
+    }
+    return tagsLine.trim();
   }
 
   generateExamples(numParams) {
